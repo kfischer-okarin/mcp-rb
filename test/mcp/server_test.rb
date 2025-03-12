@@ -140,6 +140,7 @@ module MCP
 
     def test_handle_ping
       server = build_test_server
+      initialize_server(server)
 
       request = {
         jsonrpc: MCP::Constants::JSON_RPC_VERSION,
