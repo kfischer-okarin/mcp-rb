@@ -15,7 +15,7 @@ module MCP
     end
 
     def test_tool_registration
-      server = Server.new(name: "test_server")
+      server = build_test_server
       initialize_server(server)
 
       server.tool("test_tool") do
@@ -32,7 +32,7 @@ module MCP
     end
 
     def test_resource_registration
-      server = Server.new(name: "test_server")
+      server = build_test_server
       initialize_server(server)
 
       server.resource("test_resource") do
@@ -49,7 +49,7 @@ module MCP
     end
 
     def test_resource_template_registration
-      server = Server.new(name: "test_server")
+      server = build_test_server
       initialize_server(server)
 
       server.resource_template("content://{test_variable}") do
@@ -66,7 +66,7 @@ module MCP
     end
 
     def test_tool_block_execution
-      server = Server.new(name: "test_server")
+      server = build_test_server
       initialize_server(server)
 
       server.tool("echo") do
@@ -81,7 +81,7 @@ module MCP
     end
 
     def test_resource_block_execution
-      server = Server.new(name: "test_server")
+      server = build_test_server
       initialize_server(server)
 
       server.resource("content") do
@@ -95,7 +95,7 @@ module MCP
     end
 
     def test_resource_template_block_execution
-      server = Server.new(name: "test_server")
+      server = build_test_server
       initialize_server(server)
 
       server.resource_template("content://{test_variable}") do
@@ -109,7 +109,7 @@ module MCP
     end
 
     def test_tool_registration_with_invalid_name
-      server = Server.new(name: "test_server")
+      server = build_test_server
       initialize_server(server)
 
       assert_raises(ArgumentError) { server.tool(nil) { "test" } }
@@ -117,14 +117,14 @@ module MCP
     end
 
     def test_resource_registration_with_invalid_name
-      server = Server.new(name: "test_server")
+      server = build_test_server
       initialize_server(server)
 
       assert_raises(ArgumentError) { server.resource(nil) { "test" } }
     end
 
     def test_resource_template_registration_with_invalid_name
-      server = Server.new(name: "test_server")
+      server = build_test_server
       initialize_server(server)
 
       assert_raises(ArgumentError) { server.resource_template(nil) { "test" } }

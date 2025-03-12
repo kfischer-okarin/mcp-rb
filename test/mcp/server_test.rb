@@ -12,7 +12,7 @@ module MCP
     end
 
     def test_initialize_request
-      server = Server.new(name: "test_server")
+      server = build_test_server
       request = {
         jsonrpc: MCP::Constants::JSON_RPC_VERSION,
         method: MCP::Constants::RequestMethods::INITIALIZE,
@@ -35,7 +35,7 @@ module MCP
     end
 
     def test_initialize_with_unsupported_version
-      server = Server.new(name: "test_server")
+      server = build_test_server
       request = {
         jsonrpc: MCP::Constants::JSON_RPC_VERSION,
         method: MCP::Constants::RequestMethods::INITIALIZE,
@@ -54,7 +54,7 @@ module MCP
     end
 
     def test_initialized_notification
-      server = Server.new(name: "test_server")
+      server = build_test_server
 
       # First initialize
       init_request = {
@@ -80,7 +80,7 @@ module MCP
     end
 
     def test_request_before_initialization
-      server = Server.new(name: "test_server")
+      server = build_test_server
       request = {
         jsonrpc: MCP::Constants::JSON_RPC_VERSION,
         method: MCP::Constants::RequestMethods::TOOLS_LIST,
@@ -93,7 +93,7 @@ module MCP
     end
 
     def test_handle_call_tool
-      server = Server.new(name: "test_server")
+      server = build_test_server
       initialize_server(server)
 
       # Register and call the tool
@@ -139,7 +139,7 @@ module MCP
     end
 
     def test_handle_ping
-      server = Server.new(name: "test_server")
+      server = build_test_server
 
       request = {
         jsonrpc: MCP::Constants::JSON_RPC_VERSION,
