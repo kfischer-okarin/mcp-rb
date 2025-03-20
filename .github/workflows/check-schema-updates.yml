@@ -1,0 +1,35 @@
+name: Check for Schema Updates
+
+on:
+  schedule:
+    # Run weekly on Monday at 9:00 AM UTC
+    - cron: "0 9 * * 1"
+
+  # Allow manual triggering
+  workflow_dispatch:
+
+jobs:
+  check-schema-versions:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for newer schema versions
+        id: check-versions
+        run: scripts/check_schema_updates.rb
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Issue for Newer Schema Version
+        if: steps.check-versions.outputs.newer_version
+        uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NEWER_VERSION: ${{ steps.check-versions.outputs.newer_version }}
+        with:
+          filename: .github/newer_schema_version_issue_template.md
+          update_existing: false
