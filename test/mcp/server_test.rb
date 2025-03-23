@@ -202,7 +202,7 @@ module MCP
     def test_reports_internal_errors
       start_server
 
-      @server.stub(:handle_request, proc { raise "Something went wrong" }) do
+      @server.instance_variable_get(:@message_handler).stub(:handle_request, proc { raise "Something went wrong" }) do
         response = send_message a_valid_ping_request
 
         assert response[:error]
