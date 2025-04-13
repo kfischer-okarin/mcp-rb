@@ -9,18 +9,26 @@ module MCP
       end
 
       def build
-        MCP::Server.new(name: @name, version: @version)
+        @server
       end
 
       # standard:disable Style/TrivialAccessors
       def name(name)
         @name = name
+        refresh_server
       end
 
       def version(version)
         @version = version
+        refresh_server
       end
       # standard:enable Style/TrivialAccessors
+
+      private
+
+      def refresh_server
+        @server = MCP::Server.new(name: @name, version: @version)
+      end
     end
   end
 end
