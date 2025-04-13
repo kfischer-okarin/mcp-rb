@@ -9,7 +9,7 @@ module MCP
     def self.extended(base)
       base.instance_variable_set(:@server_builder, ServerBuilder.new)
       base.extend SingleForwardable
-      base.def_delegators :@server_builder, :name
+      base.def_delegators :@server_builder, :name, :version
     end
 
     def self.build_server(mod)

@@ -12,6 +12,15 @@ module MCP
       assert_equal "test_server", server.name
     end
 
+    def test_server_version
+      server = with_dsl do
+        name "test_server" # required
+        version "1.3.9"
+      end
+
+      assert_equal "1.3.9", server.version
+    end
+
     private
 
     def with_dsl(&block)
