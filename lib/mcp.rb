@@ -7,7 +7,6 @@ require_relative "mcp/version"
 require_relative "mcp/constants"
 require_relative "mcp/app"
 require_relative "mcp/server"
-require_relative "mcp/delegator"
 require_relative "mcp/client"
 require_relative "mcp/dsl"
 
