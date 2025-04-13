@@ -20,10 +20,6 @@ module MCP
     end
   end
 
-  # require 'mcp' したファイルで最後に到達したら実行されるようにするため
-  # https://docs.ruby-lang.org/ja/latest/method/Kernel/m/at_exit.html
-  at_exit { server.serve(Server::StdioClientConnection.new) if $ERROR_INFO.nil? && server }
-
   def self.new(**options, &block)
     @server = Server.new(**options)
     return @server if block.nil?
@@ -38,4 +34,13 @@ module MCP
   end
 end
 
-extend MCP::Delegator # standard:disable Style/MixinUsage
+extend MCP::DSL # standard:disable Style/MixinUsage
+
+was_required_by_app_file = caller_locations.first.absolute_path == File.absolute_path($PROGRAM_NAME)
+
+at_exit do
+  if $ERROR_INFO.nil? && was_required_by_app_file
+    server = MCP::DSL.build_server(self)
+    server.serve(MCP::Server::StdioClientConnection.new)
+  end
+end
