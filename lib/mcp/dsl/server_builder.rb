@@ -28,6 +28,10 @@ module MCP
         @server.resource(uri, &block)
       end
 
+      def resource_template(uri_template, &block)
+        @server.resource_template(uri_template, &block)
+      end
+
       private
 
       def refresh_server

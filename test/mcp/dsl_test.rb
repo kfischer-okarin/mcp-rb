@@ -45,6 +45,30 @@ module MCP
       assert_equal "<greeting>Hello, World!</greeting>", content
     end
 
+    def test_resource_template
+      server = with_dsl do
+        name "test_server" # required
+
+        resource_template "hello://{user_name}.xml" do
+          name "Hello User"
+          description "A simple hello user message"
+          mime_type "application/xml"
+          call { |args| "<greeting>Hello, #{args[:user_name]}!</greeting>" }
+        end
+      end
+
+      expected_resource_template = {
+        uriTemplate: "hello://{user_name}.xml",
+        name: "Hello User",
+        description: "A simple hello user message",
+        mimeType: "application/xml"
+      }
+      assert_equal [expected_resource_template], server.list_resource_templates
+
+      content = server.read_resource("hello://alice.xml")
+      assert_equal "<greeting>Hello, alice!</greeting>", content
+    end
+
     private
 
     def with_dsl(&block)
