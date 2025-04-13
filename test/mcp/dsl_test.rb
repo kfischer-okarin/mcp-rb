@@ -69,6 +69,39 @@ module MCP
       assert_equal "<greeting>Hello, alice!</greeting>", content
     end
 
+    def test_tool
+      server = with_dsl do
+        name "test_server" # required
+
+        tool "greet" do
+          description "Greet someone by name"
+          argument :name, String, required: true, description: "Name to greet"
+          call do |args|
+            "Hello, #{args[:name]}!"
+          end
+        end
+      end
+
+      expected_tool = {
+        name: "greet",
+        description: "Greet someone by name",
+        inputSchema: {
+          type: :object,
+          properties: {
+            name: {
+              type: :string,
+              description: "Name to greet"
+            }
+          },
+          required: [:name]
+        }
+      }
+      assert_equal [expected_tool], server.list_tools
+
+      tool_result = server.call_tool("greet", name: "Alice")
+      assert_equal "Hello, Alice!", tool_result
+    end
+
     private
 
     def with_dsl(&block)
