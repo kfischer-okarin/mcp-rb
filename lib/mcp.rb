@@ -9,6 +9,7 @@ require_relative "mcp/app"
 require_relative "mcp/server"
 require_relative "mcp/delegator"
 require_relative "mcp/client"
+require_relative "mcp/dsl"
 
 module MCP
   class << self
