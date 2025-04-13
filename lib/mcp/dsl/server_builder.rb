@@ -24,6 +24,10 @@ module MCP
       end
       # standard:enable Style/TrivialAccessors
 
+      def resource(uri, &block)
+        @server.resource(uri, &block)
+      end
+
       private
 
       def refresh_server
