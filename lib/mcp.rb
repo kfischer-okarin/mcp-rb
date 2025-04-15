@@ -15,7 +15,7 @@ end
 
 extend MCP::DSL # standard:disable Style/MixinUsage
 
-was_required_by_app_file = caller_locations.first.absolute_path == File.absolute_path($PROGRAM_NAME)
+was_required_by_app_file = caller_locations(1..1).first.absolute_path == File.absolute_path($PROGRAM_NAME)
 
 at_exit do
   if $ERROR_INFO.nil? && was_required_by_app_file

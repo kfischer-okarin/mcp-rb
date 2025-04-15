@@ -12,7 +12,7 @@ module MCP
   class Server
     attr_writer :name, :version
 
-    def initialize(app: App.new, name:, version: "0.1.0")
+    def initialize(name:, app: App.new, version: "0.1.0")
       @name = name
       @version = version
       @app = app
