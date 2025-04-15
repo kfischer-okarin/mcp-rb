@@ -11,26 +11,6 @@ require_relative "mcp/client"
 require_relative "mcp/dsl"
 
 module MCP
-  class << self
-    attr_reader :server
-
-    def initialize_server(name:, **options)
-      @server ||= Server.new(name: name, **options)
-    end
-  end
-
-  def self.new(**options, &block)
-    @server = Server.new(**options)
-    return @server if block.nil?
-
-    if block.arity.zero?
-      @server.instance_eval(&block)
-    else
-      (block.arity == 1) ? yield(@server) : yield
-    end
-
-    @server
-  end
 end
 
 extend MCP::DSL # standard:disable Style/MixinUsage
