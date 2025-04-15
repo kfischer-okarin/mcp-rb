@@ -6,40 +6,37 @@ module MCP
       def initialize
         @name = nil
         @version = nil
+        @app = App.new
       end
 
       def build
-        @server
+        MCP::Server.new(
+          app: @app,
+          name: @name,
+          version: @version
+        )
       end
 
       # standard:disable Style/TrivialAccessors
       def name(name)
         @name = name
-        refresh_server
       end
 
       def version(version)
         @version = version
-        refresh_server
       end
       # standard:enable Style/TrivialAccessors
 
       def resource(uri, &block)
-        @server.resource(uri, &block)
+        @app.register_resource(uri, &block)
       end
 
       def resource_template(uri_template, &block)
-        @server.resource_template(uri_template, &block)
+        @app.register_resource_template(uri_template, &block)
       end
 
       def tool(name, &block)
-        @server.tool(name, &block)
-      end
-
-      private
-
-      def refresh_server
-        @server = MCP::Server.new(name: @name, version: @version)
+        @app.register_tool(name, &block)
       end
     end
   end
