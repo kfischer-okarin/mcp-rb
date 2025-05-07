@@ -17,6 +17,12 @@ module MCP
         server_builder = mod.instance_variable_get(:@server_builder)
         server_builder.build
       end
+
+      def build_tool(name, &block)
+        tool_builder = ToolBuilder.new(name)
+        tool_builder.instance_eval(&block)
+        tool_builder.build
+      end
     end
   end
 end

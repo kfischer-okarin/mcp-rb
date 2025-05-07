@@ -38,9 +38,7 @@ module MCP
       end
 
       def tool(name, &block)
-        builder = ToolBuilder.new(name)
-        builder.instance_eval(&block)
-        @app.tools[name] = builder.build
+        @app.tools[name] = DSL.build_tool(name, &block)
       end
     end
   end
