@@ -66,41 +66,6 @@ module MCP
         end
       end
 
-      # Constructs tool definitions with enhanced schema support
-      class ToolBuilder
-        attr_reader :name, :arguments, :handler
-
-        def initialize(name)
-          raise ArgumentError, "Tool name cannot be nil or empty" if name.nil? || name.empty?
-          @name = name
-          @description = ""
-          @schema_builder = SchemaBuilder.new
-          @handler = nil
-        end
-
-        def description(text = nil)
-          text ? @description = text : @description
-        end
-
-        def argument(*args, **kwargs, &block)
-          @schema_builder.argument(*args, **kwargs, &block)
-        end
-
-        def call(&block)
-          @handler = block if block_given?
-        end
-
-        def to_tool_hash
-          raise ArgumentError, "Handler must be provided" unless @handler
-          {
-            name: @name,
-            description: @description,
-            input_schema: @schema_builder.to_schema,
-            handler: @handler
-          }
-        end
-      end
-
       # Lists tools with pagination
       def list_tools(cursor: nil, page_size: 10)
         start = cursor ? cursor.to_i : 0
