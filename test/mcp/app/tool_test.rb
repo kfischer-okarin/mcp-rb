@@ -11,7 +11,7 @@ module MCP
 
       def test_tools_pagination
         10.times do |i|
-          @app.register_tool("tool#{i}") do
+          @app.tools["tool#{i}"] = DSL.build_tool("tool#{i}") do
             description "Tool #{i}"
             argument :value, String, required: true, description: "Value for tool #{i}"
 
@@ -37,7 +37,7 @@ module MCP
       end
 
       def test_register_tool
-        tool = @app.register_tool("greet") do
+        tool = @app.tools["greet"] = DSL.build_tool("greet") do
           description "Greet someone by name"
           argument :name, String, required: true, description: "Name to greet"
 
@@ -70,7 +70,7 @@ module MCP
       end
 
       def test_register_tool_with_multiple_arguments
-        tool = @app.register_tool("format_greeting") do
+        tool = @app.tools["format_greeting"] = DSL.build_tool("format_greeting") do
           description "Format a greeting with title and name"
           argument :title, String, required: true, description: "Title (Mr./Ms./Dr. etc.)"
           argument :first_name, String, required: true, description: "First name"
@@ -143,7 +143,7 @@ module MCP
       end
 
       def test_tool_with_nested_object
-        tool = @app.register_tool("create_user") do
+        tool = @app.tools["create_user"] = DSL.build_tool("create_user") do
           description "Create a user with details"
           argument :user, required: true do
             argument :username, String, required: true, description: "Username"
@@ -208,7 +208,7 @@ module MCP
 
       # Test for a tool with an array of simple types
       def test_tool_with_array_argument
-        @app.register_tool("sum_numbers") do
+        @app.tools["sum_numbers"] = DSL.build_tool("sum_numbers") do
           description "Sum an array of numbers"
           argument :numbers, Array, items: Integer, description: "Array of numbers to sum"
 
@@ -258,7 +258,7 @@ module MCP
 
       # Test for a tool with an array of objects
       def test_tool_with_array_of_objects
-        @app.register_tool("list_users") do
+        @app.tools["list_users"] = DSL.build_tool("list_users") do
           description "List users with their details"
           argument :users, Array do
             argument :name, String, required: true, description: "User's name"
