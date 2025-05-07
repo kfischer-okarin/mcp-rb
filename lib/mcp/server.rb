@@ -32,10 +32,6 @@ module MCP
       @version = value
     end
 
-    def tool(name, &block)
-      @app.register_tool(name, &block)
-    end
-
     def resource(uri, &block)
       @app.register_resource(uri, &block)
     end

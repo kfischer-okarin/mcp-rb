@@ -101,13 +101,6 @@ module MCP
         end
       end
 
-      # Registers a tool with the given name and block
-      def register_tool(name, &block)
-        builder = ToolBuilder.new(name)
-        builder.instance_eval(&block)
-        tools[name] = builder.to_tool_hash
-      end
-
       # Lists tools with pagination
       def list_tools(cursor: nil, page_size: 10)
         start = cursor ? cursor.to_i : 0
