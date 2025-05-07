@@ -19,7 +19,7 @@ was_required_by_app_file = caller_locations(1..1).first.absolute_path == File.ab
 
 at_exit do
   if $ERROR_INFO.nil? && was_required_by_app_file
-    server = MCP::DSL.build_server(self)
+    server = MCP::DSL.build_server_defined_in(self)
     server.serve(MCP::Server::StdioClientConnection.new)
   end
 end

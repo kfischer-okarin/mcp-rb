@@ -301,7 +301,7 @@ module MCP
         instance_eval(&block)
       end
 
-      DSL.build_server(mod)
+      DSL.build_server_defined_in(mod)
     end
   end
 end

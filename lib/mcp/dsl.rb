@@ -13,7 +13,7 @@ module MCP
         base.def_delegators :@server_builder, :name, :version, :resource, :resource_template, :tool
       end
 
-      def build_server(mod)
+      def build_server_defined_in(mod)
         server_builder = mod.instance_variable_get(:@server_builder)
         server_builder.build
       end
