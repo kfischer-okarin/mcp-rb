@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "tool_builder"
+
 module MCP
   module DSL
     class ServerBuilder
@@ -36,7 +38,9 @@ module MCP
       end
 
       def tool(name, &block)
-        @app.register_tool(name, &block)
+        builder = ToolBuilder.new(name)
+        builder.instance_eval(&block)
+        @app.tools[name] = builder.build
       end
     end
   end
